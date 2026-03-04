@@ -1,0 +1,84 @@
+* {
+  border: none;
+  border-radius: 8px;
+  font-family: "JetbrainsMono Nerd Font";
+  font-size: 14px; /* Standard kleiner für alle */
+  min-height: 0px; /* etwas kleiner */
+}
+
+/* Launcher groß lassen */
+#custom-launcher {
+  font-size: 24px; /* bleibt groß */
+  margin-top: 2px;
+  margin-left: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: #fe8019;
+  background: transparent;
+}
+
+/* Waybar transparent */
+window#waybar {
+  background: transparent;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* Fenster */
+#window {
+  margin-top: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  transition: none;
+  color: transparent;
+  background: transparent;
+}
+
+/* Workspaces */
+#workspaces {
+  margin-top: 4px;
+  margin-left: 10px;
+  font-size: 16px; /* kleiner */
+  font-weight: 500;
+  margin-bottom: 0px;
+  border-radius: 8px;
+  transition: none;
+}
+
+/* Workspaces Buttons */
+#workspaces button {
+  transition: none;
+  color: #fbf1c7;
+  background: transparent;
+  border-radius: 2px;
+  font-size: 14px; /* kleiner */
+}
+
+#workspaces button.active {
+  color: #fe8019;
+}
+
+#workspaces button:hover {
+  transition: none;
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: #d65d0e;
+  border-color: #d65d0e;
+}
+
+/* Andere Module verkleinern */
+#network, #wireplumber, #battery, #backlight, #clock, #memory, #cpu, #custom-media {
+  margin-top: 4px;
+  margin-left: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-bottom: 0px;
+  border-radius: 8px;
+  transition: none;
+  font-size: 14px; /* kleiner */
+}
