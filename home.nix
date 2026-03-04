@@ -30,6 +30,7 @@
     ".config/rofi" = { source = ./config/rofi; recursive = true; force = true; };
     ".config/kitty" = { source = ./config/kitty; recursive = true; force = true; };
     ".config/zathura" = { source = ./config/zathura; recursive = true; force = true; };
+    ".config/btop" = { source = ./config/btop; recursive = true; force = true; };
   };
 
   programs.home-manager.enable = true;
