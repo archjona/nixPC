@@ -1,0 +1,2 @@
+# nixPC
+NixOS PC config
