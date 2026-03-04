@@ -11,7 +11,6 @@
     statusline.lualine.enable = true;
     telescope.enable = true;
     autocomplete.nvim-cmp.enable = true;
-    terminal.toggleterm.lazygit.enable = true;
     lsp.enable = true;
 
     extraPlugins = {
@@ -27,6 +26,13 @@
       vim.g.vimtex_view_method = "zathura"
       vim.g.vimtex_view_automatic = 1
     '';
+
+    toggleterm.lazygit = {
+        enable = true;
+        mappings = {
+                open = "<leader>g";
+        };
+      };
 
     navigation.harpoon = {
       enable = true;
