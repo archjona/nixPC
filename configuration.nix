@@ -3,42 +3,75 @@
 {
   imports =
     [ 
-      /etc/nixos/hardware-configuration.nix # Nutzt die Datei im selben Ordner
-      ./nvf-configuration.nix      # Bindet deine Neovim-Config ein
+      /etc/nixos/hardware-configuration.nix 
+      ./nvf-configuration.nix      
     ];
 
+  # --- NVIDIA & Grafik Konfiguration ---
+  nixpkgs.config.allowUnfree = true;
 
-        environment.sessionVariables = {
-  NIXOS_OZONE_WL = "1";
-};
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true; # Wichtig für Steam!
+  };
 
- boot.loader.grub.device = "/dev/nvme0n1";
-boot.loader.grub.enable = true;
-boot.loader.grub.useOSProber = true;
+  # Lade den NVIDIA Treiber
+  services.xserver.videoDrivers = ["nvidia"];
 
-hardware.graphics = {
-  enable = true;
-  enable32Bit = true;
-};
+  hardware.nvidia = {
+    modesetting.enable = true;
+    # Power Management kann bei Hyprland manchmal Flackern verursachen, 
+    # daher auf 'false' oder experimentell testen.
+    powerManagement.enable = false; 
+    powerManagement.finegrained = false;
+    
+    # Für die 3060 Ti ist 'false' (proprietär) aktuell stabiler für Gaming.
+    open = false; 
+    
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
+  # Kernel-Parameter für Wayland & NVIDIA
+  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";           # Erzwingt Wayland für Electron Apps
+    WLR_NO_HARDWARE_CURSORS = "1";  # Behebt unsichtbaren Cursor bei NVIDIA
+    LIBVA_DRIVER_NAME = "nvidia";   # Hardware-Beschleunigung
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
+
+  # --- Steam & Gaming ---
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; 
+    dedicatedServer.openFirewall = true;
+    gamescopeSession.enable = true; # Optional: Für bessere Upscaling-Optionen
+  };
+  
+  programs.gamemode.enable = true; # Optimiert CPU/Prioritäten beim Zocken
+
+  # --- Bootloader ---
+  boot.loader.grub.device = "/dev/nvme0n1";
+  boot.loader.grub.enable = true;
+  boot.loader.grub.useOSProber = true;
+
+  # --- System-Einstellungen ---
   networking.hostName = "nixos";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Netzwerkkonfiguration
   networking.networkmanager.enable = true;
-
-  # Zeitkonfiguration
   time.timeZone = "Europe/Berlin";
 
-services.xserver = {
-  enable = true;
-  displayManager.sessionCommands = ''
-    export XCURSOR_THEME=Adwaita
-    export XCURSOR_SIZE=24
-  '';
-};
+  services.xserver = {
+    enable = true;
+    displayManager.sessionCommands = ''
+      export XCURSOR_THEME=Adwaita
+      export XCURSOR_SIZE=24
+    '';
+  };
 
-  # Internationalisierung
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -52,7 +85,6 @@ services.xserver = {
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # X11- und Desktopumgebung (GNOME als Fallback)
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
@@ -65,14 +97,13 @@ services.xserver = {
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
 
-  # Benutzer hinzufügen
+  # Benutzer
   users.users.jona = {
     isNormalUser = true;
     description = "Jona-Elia";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
-  # Home-Manager Konfiguration
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
@@ -82,13 +113,12 @@ services.xserver = {
     useUserPackages = true;
   };
 
-  # NVF Aktivierung (Wichtig für deine nvf-configuration.nix)
   programs.nvf = {
     enable = true;
     defaultEditor = true;
   };
 
-  # Audio mit Pipewire
+  # Audio
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -101,56 +131,22 @@ services.xserver = {
   console.keyMap = "de";
   services.printing.enable = true;
 
-  # Programme installieren
+  # System Pakete
   environment.systemPackages = with pkgs; [
-    wget
-    git
-    hyprpaper
-    waybar
-    kitty
-    foot
-    ghostty
-    # neovim wurde hier entfernt, da nvf nvim bereitstellt!
-    swww
-    pywal
-    gcc
-    cmake
-    clang
-    python3
-    nerd-fonts.jetbrains-mono
-    tmux
-    lazygit
-    hyprshot
-    hyprlock
-    hypridle
-    alsa-utils
-    rofi
-    btop
-    librewolf
-    steam
-    spotify
-    discord
-    flatpak
-    zoxide
-    fzf
-    zathura
-    texlivePackages.latexmk
-    texliveFull
-    docker
-    lazydocker
-    distrobox
-    fastfetch
-    adwaita-icon-theme
-    pavucontrol
+    wget git hyprpaper waybar kitty foot ghostty swww pywal
+    gcc cmake clang python3 nerd-fonts.jetbrains-mono
+    tmux lazygit hyprshot hyprlock hypridle alsa-utils
+    rofi btop librewolf spotify discord flatpak zoxide
+    fzf zathura texlivePackages.latexmk texliveFull
+    docker lazydocker distrobox fastfetch adwaita-icon-theme
+    pavucontrol mangohud # MangoHud für FPS-Anzeige hinzugefügt
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
-  # Hyprland-Konfiguration
+  # Hyprland
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  system.stateVersion = "24.11"; # Stabilere Version für Config-Pfade
+  system.stateVersion = "24.11";
 }

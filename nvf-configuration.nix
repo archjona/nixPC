@@ -27,23 +27,30 @@
       vim.g.vimtex_view_automatic = 1
     '';
 
-    toggleterm.lazygit = {
+     terminal = {
+    toggleterm = {
+      enable = true;
+
+      lazygit = {
         enable = true;
+        direction = "float";   # optional, default ist "float"
         mappings = {
-                open = "<leader>g";
+          open = "<leader>g";
         };
       };
+    };
+  };
 
-    navigation.harpoon = {
-      enable = true;
-      mappings = {
-        markFile = "<leader>a";
-        listMarks = "<C-e>";
-        file1 = "<leader>1";
-        file2 = "<leader>2";
-        file3 = "<leader>3";
-        file4 = "<leader>4";
-      };
+      navigation.harpoon = {
+        enable = true;
+        mappings = {
+          markFile = "<leader>a";
+          listMarks = "<C-e>";
+          file1 = "<leader>1";
+          file2 = "<leader>2";
+          file3 = "<leader>3";
+          file4 = "<leader>4";
+        };
     };
 
     languages = {
