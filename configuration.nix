@@ -133,7 +133,7 @@
 
   # System Pakete
   environment.systemPackages = with pkgs; [
-    wget git hyprpaper waybar kitty foot ghostty swww pywal
+    wget git hyprpaper waybar kitty ghostty swww pywal
     gcc cmake clang python3 nerd-fonts.jetbrains-mono
     tmux lazygit hyprshot hyprlock hypridle alsa-utils
     rofi btop librewolf spotify discord flatpak zoxide
