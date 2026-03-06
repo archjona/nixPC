@@ -101,7 +101,7 @@
   users.users.jona = {
     isNormalUser = true;
     description = "Jona-Elia";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "tty" ];
   };
 
   home-manager = {
