@@ -2,6 +2,7 @@
 @theme "themes/default.rasi"
 
 configuration {
+    terminal:                     "kitty";
     modi:                         "drun";
     show-icons:                   true;
     display-drun:                 " ";
