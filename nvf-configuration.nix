@@ -35,15 +35,17 @@
       };
     };
 
-    luaConfigRC = {
+luaConfigRC = {
       vimtex = ''
         vim.g.mapleader = " "
         vim.g.maplocalleader = " "
         vim.g.vimtex_compiler_method = "latexmk"
         vim.g.vimtex_view_method = "zathura"
         vim.g.vimtex_view_automatic = 1
+        
+        -- Latex kompilieren mit leader ll
+        vim.keymap.set("n", "<leader>ll", "<cmd>VimtexCompile<CR>", { silent = true, desc = "Latex kompilieren" })
       '';
-
       # Diagnostics für clangd ausschalten - aktualisierte Version ohne deprecated Funktion
       clangd-diagnostics = ''
         -- Clangd Diagnostics deaktivieren (aktualisierte Methode)
