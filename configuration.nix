@@ -88,7 +88,46 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
-  services.xserver.xkb = {
+  # KEINE GNOME-Apps installieren!
+  services.gnome.core-apps.enable = false;  # Keine Basis-Apps
+  services.gnome.core-developer-tools.enable = false;
+  services.gnome.games.enable = false;
+  
+ environment.gnome.excludePackages = with pkgs; [
+  # Terminals
+  xterm
+  gnome-terminal
+  gnome-console
+  
+  # GNOME Apps (ALLE direkt, ohne "gnome." Prefix)
+  epiphany        # Web Browser
+  geary           # Email Client
+  gnome-software  # Software Center
+  gnome-tour
+  gnome-connections
+  gnome-contacts
+  gnome-characters
+  gnome-font-viewer
+  simple-scan
+  evince          # Document Viewer
+  gnome-calculator
+  gnome-calendar
+  gnome-clocks
+  cheese          # Camera
+  baobab          # Disks Usage Analyzer
+  gnome-disk-utility
+  seahorse
+  eog             # Image Viewer
+  totem           # Videos
+];
+  # Printing deaktivieren (wenn nicht benötigt)
+  services.printing.enable = false;
+  
+  # Optional: Kitty als Standard-Terminal setzen
+  environment.variables = {
+    TERMINAL = "kitty";
+  }; 
+        services.xserver.xkb = {
     layout = "de";
     variant = "";
   };
@@ -129,7 +168,6 @@
   };
 
   console.keyMap = "de";
-  services.printing.enable = true;
 
   # System Pakete
   environment.systemPackages = with pkgs; [
@@ -139,7 +177,7 @@
     rofi btop librewolf spotify discord flatpak zoxide
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
-    pavucontrol mangohud # MangoHud für FPS-Anzeige hinzugefügt
+    pavucontrol nautilus loupe obs-studio celluloid
   ];
 
   # Hyprland

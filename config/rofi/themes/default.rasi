@@ -1,0 +1,44 @@
+@import "../colors/gruvbox.rasi"
+
+* {
+    text: @foreground;
+    text-selected: #ffffff;
+    shade-bg: #3c3836;
+    shade-shadow: #1d2021;
+    shade-border: @selected;
+}
+
+window {
+    fullscreen: false;
+    transparency: "real";
+    cursor: "default";
+    background-color: rgba(40, 40, 40, 0.88);
+    border: 0px;
+    border-color: @selected;
+}
+
+/* Normal elements - komplett transparent */
+element normal.normal,
+element alternate.normal {
+    background-color: transparent;
+    text-color: @text;
+}
+
+/* Selected element - nur Hintergrund für das ausgewählte Element */
+element selected.normal {
+    background-color: @shade-bg;
+    text-color: @text-selected;
+    border: 1px solid;
+    border-color: @selected;
+}
+
+/* Icon bleibt gleich */
+element-icon {
+    size: 72px;
+}
+
+/* Text-Box innerhalb des Elements - transparent */
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}

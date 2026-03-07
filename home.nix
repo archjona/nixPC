@@ -22,6 +22,152 @@
     };
   };
 
+  # Unerwünschte Desktop-Einträge ausblenden - mit EXAKTEN Namen
+  xdg.desktopEntries = {
+    # XTerm
+    "xterm" = {
+      name = "XTerm";
+      exec = "kitty";
+      noDisplay = true;
+      terminal = false;
+    };
+    
+    # Color Profile Viewer
+    "org.gnome.ColorProfileViewer" = {
+      name = "Color Profile Viewer";
+      exec = "org.gnome.ColorProfileViewer";
+      noDisplay = true;
+    };
+    
+    # IBus Einträge
+    "org.freedesktop.IBus.Setup" = {
+      name = "IBus Setup";
+      exec = "ibus-setup";
+      noDisplay = true;
+    };
+    "org.freedesktop.IBus.Panel.Emojier" = {
+      name = "IBus Emojier";
+      exec = "ibus-setup";
+      noDisplay = true;
+    };
+    "org.freedesktop.IBus.Panel.Extension.Gtk3" = {
+      name = "IBus Extension";
+      exec = "ibus-setup";
+      noDisplay = true;
+    };
+    "org.freedesktop.IBus.Panel.Wayland.Gtk3" = {
+      name = "IBus Wayland";
+      exec = "ibus-setup";
+      noDisplay = true;
+    };
+    
+    # Rygel
+    "rygel" = {
+      name = "Rygel";
+      exec = "rygel";
+      noDisplay = true;
+    };
+    "rygel-preferences" = {
+      name = "Rygel Preferences";
+      exec = "rygel-preferences";
+      noDisplay = true;
+    };
+    
+    # Rofi
+    "rofi" = {
+      name = "Rofi";
+      exec = "rofi";
+      noDisplay = true;
+    };
+    "rofi-theme-selector" = {
+      name = "Rofi Theme Selector";
+      exec = "rofi-theme-selector";
+      noDisplay = true;
+    };
+    
+    # NVIDIA
+    "nvidia-settings" = {
+      name = "NVIDIA Settings";
+      exec = "nvidia-settings";
+      noDisplay = true;
+    };
+    
+    # GNOME Color Manager
+    "gcm-calibrate" = {
+      name = "Color Calibrate";
+      exec = "gcm-calibrate";
+      noDisplay = true;
+    };
+    "gcm-import" = {
+      name = "Color Import";
+      exec = "gcm-import";
+      noDisplay = true;
+    };
+    "gcm-picker" = {
+      name = "Color Picker";
+      exec = "gcm-picker";
+      noDisplay = true;
+    };
+    "gnome-color-panel" = {
+      name = "Color Panel";
+      exec = "gnome-color-panel";
+      noDisplay = true;
+    };
+  };
+
+  # Aktivierungsskript mit PERMISSION FIX und sicherer Methode
+  home.activation.hideAllUnwanted = let
+    desktopUtils = "${pkgs.desktop-file-utils}/bin";
+  in ''
+    echo "Stelle Verzeichnisberechtigungen sicher..."
+    
+    # VERBESSERT: Verzeichnis mit sudo erstellen (geht nicht in activation)
+    # Stattdessen prüfen wir und geben eine hilfreiche Fehlermeldung
+    if [ ! -w "/home/jona/.local/share/applications" ]; then
+      echo "WARNUNG: /home/jona/.local/share/applications ist nicht beschreibbar!"
+      echo "Bitte führe manuell aus:"
+      echo "  sudo mkdir -p /home/jona/.local/share/applications"
+      echo "  sudo chown -R jona:users /home/jona/.local"
+      echo "  sudo chmod -R 755 /home/jona/.local"
+      exit 1
+    fi
+    
+    echo "Verstecke unerwünschte Desktop-Einträge mit exakten Namen..."
+    
+    # Liste ALLER unerwünschter Desktop-Dateien
+    unwanted=(
+      "xterm"
+      "org.gnome.ColorProfileViewer"
+      "org.freedesktop.IBus.Setup"
+      "org.freedesktop.IBus.Panel.Emojier"
+      "org.freedesktop.IBus.Panel.Extension.Gtk3"
+      "org.freedesktop.IBus.Panel.Wayland.Gtk3"
+      "rygel"
+      "rygel-preferences"
+      "rofi"
+      "rofi-theme-selector"
+      "nvidia-settings"
+      "gcm-calibrate"
+      "gcm-import"
+      "gcm-picker"
+      "gnome-color-panel"
+    )
+    
+    for app in "''${unwanted[@]}"; do
+      if [ -f "/run/current-system/sw/share/applications/$app.desktop" ]; then
+        echo "  Verstecke: $app.desktop"
+        # VERBESSERT: Mit install statt cat (setzt korrekte Permissions)
+        install -m 644 "/run/current-system/sw/share/applications/$app.desktop" "/home/jona/.local/share/applications/$app.desktop"
+        echo "NoDisplay=true" >> "/home/jona/.local/share/applications/$app.desktop"
+        echo "Hidden=true" >> "/home/jona/.local/share/applications/$app.desktop"
+      fi
+    done
+    
+    ${desktopUtils}/update-desktop-database /home/jona/.local/share/applications || true
+    
+    echo "Fertig! Alle unerwünschten Einträge sollten jetzt verschwunden sein."
+  '';
+
   # Dotfiles Verknüpfungen
   home.file = {
     ".config/hypr" = { source = ./config/hypr; recursive = true; force = true; };
