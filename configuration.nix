@@ -177,7 +177,7 @@
     rofi btop librewolf spotify discord flatpak zoxide
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
-    pavucontrol nautilus loupe obs-studio celluloid
+    pavucontrol nautilus loupe obs-studio celluloid claws-mail
   ];
 
   # Hyprland
