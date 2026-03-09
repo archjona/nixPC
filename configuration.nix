@@ -52,13 +52,22 @@
   };
   
   programs.gamemode.enable = true; # Optimiert CPU/Prioritäten beim Zocken
-
   # --- Bootloader ---
-  boot.loader.grub.device = "/dev/nvme0n1";
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/nvme0n1";
+    useOSProber = true;
+    
+    # Das Gruvbox-Theme mit dem goldenen NixOS-Logo
+    theme = pkgs.fetchFromGitHub {
+      owner = "Atif-Mahmud";
+      repo = "nix-gruv-grub";
+      rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
+      sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
+    } + "/tartarus"; 
+};
 
-  # --- System-Einstellungen ---
+        # --- System-Einstellungen ---
   networking.hostName = "nixos";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.networkmanager.enable = true;
