@@ -204,6 +204,7 @@ in
     ".config/kitty" = { source = ./config/kitty; recursive = true; force = true; };
     ".config/zathura" = { source = ./config/zathura; recursive = true; force = true; };
     ".config/btop" = { source = ./config/btop; recursive = true; force = true; };
+    ".config/mango" = { source = ./config/mango; recursive = true; force = true; };
   };
 
   programs.home-manager.enable = true;
