@@ -52,6 +52,7 @@
   };
   
   programs.gamemode.enable = true; # Optimiert CPU/Prioritäten beim Zocken
+  
   # --- Bootloader ---
   boot.loader.grub = {
     enable = true;
@@ -65,9 +66,9 @@
       rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
       sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
     } + "/tartarus"; 
-};
+  };
 
-        # --- System-Einstellungen ---
+  # --- System-Einstellungen ---
   networking.hostName = "nixos";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.networkmanager.enable = true;
@@ -102,33 +103,34 @@
   services.gnome.core-developer-tools.enable = false;
   services.gnome.games.enable = false;
   
- environment.gnome.excludePackages = with pkgs; [
-  # Terminals
-  xterm
-  gnome-terminal
-  gnome-console
+  environment.gnome.excludePackages = with pkgs; [
+    # Terminals
+    xterm
+    gnome-terminal
+    gnome-console
+    
+    # GNOME Apps (ALLE direkt, ohne "gnome." Prefix)
+    epiphany        # Web Browser
+    geary           # Email Client
+    gnome-software  # Software Center
+    gnome-tour
+    gnome-connections
+    gnome-contacts
+    gnome-characters
+    gnome-font-viewer
+    simple-scan
+    evince          # Document Viewer
+    gnome-calculator
+    gnome-calendar
+    gnome-clocks
+    cheese          # Camera
+    baobab          # Disks Usage Analyzer
+    gnome-disk-utility
+    seahorse
+    eog             # Image Viewer
+    totem           # Videos
+  ];
   
-  # GNOME Apps (ALLE direkt, ohne "gnome." Prefix)
-  epiphany        # Web Browser
-  geary           # Email Client
-  gnome-software  # Software Center
-  gnome-tour
-  gnome-connections
-  gnome-contacts
-  gnome-characters
-  gnome-font-viewer
-  simple-scan
-  evince          # Document Viewer
-  gnome-calculator
-  gnome-calendar
-  gnome-clocks
-  cheese          # Camera
-  baobab          # Disks Usage Analyzer
-  gnome-disk-utility
-  seahorse
-  eog             # Image Viewer
-  totem           # Videos
-];
   # Printing deaktivieren (wenn nicht benötigt)
   services.printing.enable = false;
   
@@ -136,7 +138,8 @@
   environment.variables = {
     TERMINAL = "kitty";
   }; 
-        services.xserver.xkb = {
+  
+  services.xserver.xkb = {
     layout = "de";
     variant = "";
   };
@@ -187,7 +190,8 @@
     rofi btop librewolf spotify discord flatpak 
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
-    pavucontrol nautilus loupe obs-studio celluloid thunderbird
+    pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv grim
+    wl-clipboard ripgrep fd
   ];
 
   # Hyprland
@@ -195,6 +199,10 @@
   programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+
+  #mango
+  programs.mango.enable = true;
 
   system.stateVersion = "24.11";
 }

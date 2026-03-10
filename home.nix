@@ -1,9 +1,30 @@
 { config, pkgs, ... }:
 
+let
+  # DEFINITIONEN VOR DEM CONFIG-BLOCK
+  nix-search-script = pkgs.writeShellApplication {
+    name = "ns";
+    runtimeInputs = with pkgs; [
+      fzf
+      nix-search-tv
+    ];
+    text = builtins.readFile "${pkgs.nix-search-tv.src}/nixpkgs.sh";
+  };
+in
+
 {
   home.username = "jona";
   home.homeDirectory = "/home/jona";
   home.stateVersion = "24.11";
+
+  # PAKETE - HIER KOMMT DAS SKRIPT REIN
+  home.packages = with pkgs; [
+    zoxide
+    nix-search-tv      # Basis-Paket
+    fzf                # Für Fuzzy-Finding
+    nix-search-script  # Dein ns-Befehl
+  ];
+
   # GTK & Icons
   gtk = {
     enable = true;
@@ -114,9 +135,6 @@
     };
   };
 
-
- home.packages = with pkgs; [ zoxide ];
-
   programs.bash = {
     enable = true;
     initExtra = ''
@@ -124,6 +142,7 @@
       eval "$(zoxide init bash --cmd cd)"
     '';
   };
+
   home.activation.hideAllUnwanted = let
     desktopUtils = "${pkgs.desktop-file-utils}/bin";
   in ''

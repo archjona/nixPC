@@ -5,13 +5,17 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nvf.url = "github:notashelf/nvf";
+    mangowc = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nvf, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nvf, home-manager, mangowc, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -25,6 +29,7 @@
           ./tmux.nix
           home-manager.nixosModules.default
           nvf.nixosModules.default
+          mangowc.nixosModules.mango
           
           # Ermöglicht das Ausführen von Binaries aus der "Außenwelt"
           {
