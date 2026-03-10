@@ -4,7 +4,6 @@
   home.username = "jona";
   home.homeDirectory = "/home/jona";
   home.stateVersion = "24.11";
-
   # GTK & Icons
   gtk = {
     enable = true;
@@ -115,7 +114,16 @@
     };
   };
 
-  # Aktivierungsskript mit PERMISSION FIX und sicherer Methode
+
+ home.packages = with pkgs; [ zoxide ];
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      # Wichtig: --cmd cd direkt beim init übergeben
+      eval "$(zoxide init bash --cmd cd)"
+    '';
+  };
   home.activation.hideAllUnwanted = let
     desktopUtils = "${pkgs.desktop-file-utils}/bin";
   in ''

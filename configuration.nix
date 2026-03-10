@@ -159,6 +159,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup";            
   };
 
   programs.nvf = {
@@ -183,7 +184,7 @@
     wget git hyprpaper waybar kitty ghostty swww pywal
     gcc cmake clang python3 nerd-fonts.jetbrains-mono
     tmux lazygit hyprshot hyprlock hypridle alsa-utils
-    rofi btop librewolf spotify discord flatpak zoxide
+    rofi btop librewolf spotify discord flatpak 
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
     pavucontrol nautilus loupe obs-studio celluloid thunderbird
