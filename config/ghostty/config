@@ -1,4 +1,4 @@
-# This is the configuration file for Ghostty.
+#This is the configuration file for Ghostty.
 #
 # This template file has been automatically created at the following
 # path since Ghostty couldn't find any existing config files on your system:
@@ -29,6 +29,8 @@
 # window-padding-x = 2
 theme = Gruvbox Dark
 background-opacity = 0.85
+background-blur = true
+font-size = 14
 background-blur = true
 # # Spacing around the equals sign does not matter.
 # # All of these are identical:

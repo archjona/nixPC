@@ -2,7 +2,7 @@
   border: none;
   font-family: Maple Mono NF CN;
   font-weight: 800;
-  font-size: 14px;                    /* Von 16px auf 14px reduziert */
+  font-size: 14px;
   min-height: 0;
 }
 
@@ -15,9 +15,7 @@ window#waybar {
 tooltip {
   background: rgba(40, 40, 40, 0.76);
   border-radius: 2px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #c9b890;
+  border: none;
   color: #ddca9e;
 }
 
@@ -42,21 +40,19 @@ tooltip {
 #custom-notification,
 #custom-power {
   background: none;
-  padding: 0px 6px;                    /* Von 10px auf 6px reduziert */
+  padding: 0px 6px;
   margin: 0px;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
+  margin-top: 3px;
   margin-bottom: 0px;
+  border: none;
 }
 
 #tags {
-  border-radius: 2px;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
+  border: none;
   margin-left: 4px;
-  padding-left: 6px;                   /* Von 10px auf 6px reduziert */
-  padding-right: 4px;                  /* Von 6px auf 4px reduziert */
-  background: rgba(40, 40, 40, 0.76);
+  padding-left: 6px;
+  padding-right: 4px;
+  background: none;
 }
 
 #tags button {
@@ -66,10 +62,10 @@ tooltip {
   box-shadow: inherit;
   text-shadow: inherit;
   color: #928374;
-  padding: 0px;                        /* Von 1px auf 0px reduziert */
+  padding: 0px;
   padding-left: 0px;
   padding-right: 0px;
-  margin-right: 2px;                   /* Von 4px auf 2px reduziert */
+  margin-right: 2px;
 }
 
 #tags button {
@@ -98,74 +94,65 @@ tooltip {
   color: #d79921;
 }
 
+/* HIGHLIGHT: Beibehalten für fokussierte Tags */
 #tags button.focused {
   background-color: #ddca9e;
   color: #282828;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
-  margin-bottom: 3px;                  /* Von 5px auf 3px reduziert */
-  padding-top: 0px;                    /* Von 1px auf 0px reduziert */
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-top: 0px;
   padding-bottom: 0px;
-  border-radius: 2px;                  /* Von 3px auf 2px reduziert */
+  border-radius: 2px;
+  border: none;
 }
 
+/* HIGHLIGHT: Beibehalten für urgente Tags */
 #tags button.urgent {
   background-color: #ef5e5e;
   color: #282828;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
-  margin-bottom: 3px;                  /* Von 5px auf 3px reduziert */
-  padding-top: 0px;                    /* Von 1px auf 0px reduziert */
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-top: 0px;
   padding-bottom: 0px;
-  border-radius: 2px;                  /* Von 3px auf 2px reduziert */
+  border-radius: 2px;
+  border: none;
 }
 
 #tray {
-  background: rgba(40, 40, 40, 0.76);
-  border-radius: 3px;                  /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
+  background: none;
+  border: none;
   margin-right: 4px;
   margin-left: 4px;
-  padding-right: 6px;                  /* Von 8px auf 6px reduziert */
-  padding-left: 6px;                   /* Von 9px auf 6px reduziert */
-  padding-top: 1px;                    /* Von 2px auf 1px reduziert */
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-top: 1px;
   color: #ddca9e;
 }
 
 #network {
-  background: rgba(40, 40, 40, 0.76);
-  border-radius: 3px;                  /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
+  background: none;
+  border: none;
   margin-right: 4px;
   margin-left: 0px;
-  padding-right: 6px;                  /* Von 8px auf 6px reduziert */
-  padding-left: 6px;                   /* Von 9px auf 6px reduziert */
-  padding-top: 1px;                    /* Von 2px auf 1px reduziert */
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-top: 1px;
   color: #ddca9e;
 }
 
 #workspaces {
-  background: rgba(40, 40, 40, 0.76);
-  border-radius: 3px;                  /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
+  background: none;
+  border: none;
   margin-left: 4px;
-  padding-right: 4px;                  /* Von 6px auf 4px reduziert */
-  padding-left: 4px;                   /* Von 4px auf 4px reduziert */
+  padding-right: 4px;
+  padding-left: 4px;
 }
 
 #language {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
-  border-radius: 3px 0px 0px 3px;      /* Von 4px auf 3px reduziert */
-  min-width: 20px;                     /* Von 24px auf 20px reduziert */
+  border: none;
+  min-width: 20px;
 }
 
 #keyboard-state {
@@ -176,207 +163,155 @@ tooltip {
 }
 
 #custom-updates {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-radius: 0px 3px 3px 0px;      /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-left: 0px;
-  border-style: solid;
-  border-color: #c9b890;
+  border: none;
 }
 
 #window {
-  background: rgba(40, 40, 40, 0.76);
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-radius: 3px;                  /* Von 4px auf 3px reduziert */
+  background: none;
+  border: none;
   margin-left: 0px;
-  margin-right: 8px;                   /* Von 10px auf 8px reduziert */
+  margin-right: 8px;
   color: #ddca9e;
 }
 
 #taskbar {
-  background: rgba(40, 40, 40, 0.76);
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-radius: 3px;                  /* Von 4px auf 3px reduziert */
-  margin-left: 8px;                    /* Von 10px auf 8px reduziert */
-  margin-right: 8px;                   /* Von 10px auf 8px reduziert */
+  background: none;
+  border: none;
+  margin-left: 8px;
+  margin-right: 8px;
   color: #ddca9e;
 }
 
 #taskbar.empty {
   margin-left: 0px;
   margin-right: 0px;
-  padding-left: 8px;                   /* Von 10px auf 8px reduziert */
+  padding-left: 8px;
   padding-right: 0px;
-  border-radius: 0px;
-  border-color: transparent;
   border: none;
   background-color: transparent;
 }
 
 #taskbar button {
-  margin-right: 2px;                   /* Von 3px auf 2px reduziert */
+  margin-right: 2px;
+  border: none;
 }
 
+/* HIGHLIGHT: Beibehalten für minimierte Taskbar-Buttons */
 #taskbar button.minimized {
   background-color: #709d1c;
   color: #282828;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
-  margin-bottom: 3px;                  /* Von 5px auf 3px reduziert */
+  margin-top: 3px;
+  margin-bottom: 3px;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 2px;                   /* Von 3px auf 2px reduziert */
-  padding-right: 2px;                  /* Von 3px auf 2px reduziert */
-  border-radius: 2px;                  /* Von 3px auf 2px reduziert */
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  border: none;
 }
 
+/* HIGHLIGHT: Beibehalten für urgente Taskbar-Buttons */
 #taskbar button.urgent {
   background-color: #ce3d0d;
   color: #282828;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
-  margin-bottom: 3px;                  /* Von 5px auf 3px reduziert */
+  margin-top: 3px;
+  margin-bottom: 3px;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 2px;                   /* Von 3px auf 2px reduziert */
-  padding-right: 2px;                  /* Von 3px auf 2px reduziert */
-  border-radius: 2px;                  /* Von 3px auf 2px reduziert */
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  border: none;
 }
 
+/* HIGHLIGHT: Beibehalten für aktive Taskbar-Buttons */
 #taskbar button.active {
   background-color: #ddca9e;
   color: #282828;
-  margin-top: 3px;                     /* Von 5px auf 3px reduziert */
-  margin-bottom: 3px;                  /* Von 5px auf 3px reduziert */
+  margin-top: 3px;
+  margin-bottom: 3px;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 2px;                   /* Von 3px auf 2px reduziert */
-  padding-right: 2px;                  /* Von 3px auf 2px reduziert */
-  border-radius: 2px;                  /* Von 3px auf 2px reduziert */
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  border: none;
 }
 
 #custom-playerctl {
-  background: rgba(40, 40, 40, 0.76);
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
-  border-left: 0px;
+  background: none;
+  border: none;
   color: #ddca9e;
 }
 
 #cava {
-  background: rgba(40, 40, 40, 0.76);
-  border-radius: 3px 0px 0px 3px;      /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
+  background: none;
+  border: none;
   margin-left: 4px;
   color: #ddca9e;
 }
 
 #clock {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 1px;                   /* Von 2px auf 1px reduziert */
-  border-radius: 3px 0px 0px 3px;      /* Von 4px auf 3px reduziert */
+  border: none;
 }
 
 #pulseaudio {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
+  border: none;
   margin-left: 0px;
-  border-radius: 3px 0px 0px 3px;      /* Von 4px auf 3px reduziert */
 }
 
 #cpu  {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
-  border-left: 0px;
-  border-radius: 0px;
+  border: none;
 }
 
 #temperature {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
-  border-left: 0px;
-  border-radius: 0px;
+  border: none;
 }
 
 #backlight {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-radius: 0px 3px 3px 0px;      /* Von 4px auf 3px reduziert */
-  border-left: 0px;
+  border: none;
   margin-right: 4px;
 }
 
 #battery {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-radius: 0px;
-  border-right: 0px;
-  border-left: 0px;
+  border: none;
 }
 
 #custom-weather {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-radius: 3px 0px 0px 3px;      /* Von 4px auf 3px reduziert */
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-right: 0px;
+  border: none;
   margin-left: 4px;
-  padding-right: 5px;                  /* Von 7px auf 5px reduziert */
+  padding-right: 5px;
   padding-top: 1px;
 }
 
 #custom-notification {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-left: 0px;
-  border-right: 0px;
-  border-radius: 0px;
-  min-width: 16px;                     /* Von 18px auf 16px reduziert */
+  border: none;
+  min-width: 16px;
 }
 
 #custom-power {
-  background: rgba(40, 40, 40, 0.76);
+  background: none;
   color: #ddca9e;
-  border-width: 1px;                   /* Von 2px auf 1px reduziert */
-  border-style: solid;
-  border-color: #c9b890;
-  border-radius: 0px 3px 3px 0px;      /* Von 4px auf 3px reduziert */
-  border-left: 0px;
+  border: none;
   margin-left: 0px;
   margin-right: 4px;
-  padding-right: 10px;                 /* Von 14px auf 10px reduziert */
+  padding-right: 10px;
 }
