@@ -10,6 +10,33 @@ let
     ];
     text = builtins.readFile "${pkgs.nix-search-tv.src}/nixpkgs.sh";
   };
+  
+  # VESKTOP MIT FLAGS - ALS WRAPPER SKRIPT (OHNE eigenes bin/vesktop)
+  vesktop-fixed = pkgs.writeShellScriptBin "vesktop-fixed" ''
+    # Prüfe ob Flags schon gesetzt sind (um Dopplung zu vermeiden)
+    if [[ "$*" != *"--disable-gpu"* ]]; then
+      exec ${pkgs.vesktop}/bin/vesktop \
+        --disable-gpu \
+        --disable-accelerated-2d-canvas \
+        --disable-gpu-compositing \
+        --disable-gpu-rasterization \
+        --ozone-platform-hint=wayland \
+        "$@"
+    else
+      exec ${pkgs.vesktop}/bin/vesktop "$@"
+    fi
+  '';
+  
+  # CUSTOM DESKTOP ENTRY FÜR VESKTOP
+  vesktop-desktop = pkgs.makeDesktopItem {
+    name = "vesktop-fixed";
+    desktopName = "Vesktop (GPU-Fix)";
+    exec = "vesktop-fixed %U";
+    icon = "vesktop";
+    categories = [ "Network" "InstantMessaging" ];
+    mimeTypes = [ "x-scheme-handler/discord" ];
+    startupWMClass = "Vesktop";
+  };
 in
 
 {
@@ -17,13 +44,23 @@ in
   home.homeDirectory = "/home/jona";
   home.stateVersion = "24.11";
 
-  # PAKETE - HIER KOMMT DAS SKRIPT REIN
+  # PAKETE - NUR vesktop-fixed, NICHT das originale vesktop separat
   home.packages = with pkgs; [
     zoxide
     nix-search-tv      # Basis-Paket
     fzf                # Für Fuzzy-Finding
     nix-search-script  # Dein ns-Befehl
+    pkgs.vesktop       # Das originale Vesktop (wird vom Skript benötigt)
+    vesktop-fixed      # Dein gefixtes Vesktop-Skript (heißt jetzt vesktop-fixed)
+    vesktop-desktop    # Custom Desktop Entry
   ];
+
+  # ZUSÄTZLICH: Electron Flags als Environment Variables
+  home.sessionVariables = {
+    ELECTRON_USE_WAYLAND = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    NIXOS_OZONE_WL = "1";
+  };
 
   # GTK & Icons
   gtk = {
@@ -42,8 +79,15 @@ in
     };
   };
 
-  # Unerwünschte Desktop-Einträge ausblenden - mit EXAKTEN Namen
+  # Unerwünschte Desktop-Einträge ausblenden
   xdg.desktopEntries = {
+    # Original Vesktop ausblenden
+    "vesktop" = {
+      name = "Vesktop";
+      exec = "vesktop";
+      noDisplay = true;
+    };
+    
     # XTerm
     "xterm" = {
       name = "XTerm";
@@ -140,6 +184,9 @@ in
     initExtra = ''
       # Wichtig: --cmd cd direkt beim init übergeben
       eval "$(zoxide init bash --cmd cd)"
+      
+      # Alias für einfacheren Zugriff
+      alias discord='vesktop-fixed'
     '';
   };
 
@@ -148,14 +195,10 @@ in
   in ''
     echo "Stelle Verzeichnisberechtigungen sicher..."
     
-    # VERBESSERT: Verzeichnis mit sudo erstellen (geht nicht in activation)
-    # Stattdessen prüfen wir und geben eine hilfreiche Fehlermeldung
     if [ ! -w "/home/jona/.local/share/applications" ]; then
       echo "WARNUNG: /home/jona/.local/share/applications ist nicht beschreibbar!"
       echo "Bitte führe manuell aus:"
-      echo "  sudo mkdir -p /home/jona/.local/share/applications"
-      echo "  sudo chown -R jona:users /home/jona/.local"
-      echo "  sudo chmod -R 755 /home/jona/.local"
+      echo "  mkdir -p /home/jona/.local/share/applications"
       exit 1
     fi
     
@@ -183,12 +226,19 @@ in
     for app in "''${unwanted[@]}"; do
       if [ -f "/run/current-system/sw/share/applications/$app.desktop" ]; then
         echo "  Verstecke: $app.desktop"
-        # VERBESSERT: Mit install statt cat (setzt korrekte Permissions)
         install -m 644 "/run/current-system/sw/share/applications/$app.desktop" "/home/jona/.local/share/applications/$app.desktop"
         echo "NoDisplay=true" >> "/home/jona/.local/share/applications/$app.desktop"
         echo "Hidden=true" >> "/home/jona/.local/share/applications/$app.desktop"
       fi
     done
+    
+    # Zusätzlich: Original Vesktop verstecken falls vorhanden
+    if [ -f "${pkgs.vesktop}/share/applications/vesktop.desktop" ]; then
+      echo "  Verstecke: original Vesktop"
+      install -m 644 "${pkgs.vesktop}/share/applications/vesktop.desktop" "/home/jona/.local/share/applications/vesktop.desktop"
+      echo "NoDisplay=true" >> "/home/jona/.local/share/applications/vesktop.desktop"
+      echo "Hidden=true" >> "/home/jona/.local/share/applications/vesktop.desktop"
+    fi
     
     ${desktopUtils}/update-desktop-database /home/jona/.local/share/applications || true
     
