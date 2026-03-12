@@ -190,7 +190,7 @@
     rofi btop librewolf spotify flatpak 
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
-    pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv grim
+    pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
     wl-clipboard ripgrep fd vesktop
   ];
 
