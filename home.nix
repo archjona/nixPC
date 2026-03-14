@@ -30,7 +30,7 @@ let
   # CUSTOM DESKTOP ENTRY FÜR VESKTOP
   vesktop-desktop = pkgs.makeDesktopItem {
     name = "vesktop-fixed";
-    desktopName = "Vesktop (GPU-Fix)";
+    desktopName = "Vesktop";
     exec = "vesktop-fixed %U";
     icon = "vesktop";
     categories = [ "Network" "InstantMessaging" ];
