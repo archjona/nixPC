@@ -23,6 +23,11 @@
       };
     };
 
+    clipboard = {
+      enable = true;
+      # Verwende das + Register für die System-Zwischenablage
+      registers = "unnamedplus";
+    };
     # Zeilennummern absolut statt relativ
     options = {
       number = true;      # Zeilennummern anzeigen
