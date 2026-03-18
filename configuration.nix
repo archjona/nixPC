@@ -187,11 +187,12 @@
     wget git hyprpaper waybar kitty ghostty swww pywal
     gcc cmake clang python3 nerd-fonts.jetbrains-mono
     tmux lazygit hyprshot hyprlock hypridle alsa-utils
-    rofi btop librewolf spotify flatpak 
+    rofi btop spotify flatpak 
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
     pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
     wl-clipboard ripgrep fd vesktop shotcut
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Hyprland
