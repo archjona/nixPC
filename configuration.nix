@@ -187,7 +187,7 @@
     wget git hyprpaper waybar kitty swww pywal
     gcc cmake clang python3 nerd-fonts.jetbrains-mono
     tmux lazygit hyprshot hyprlock hypridle alsa-utils
-    rofi btop spotify flatpak lutris
+    rofi btop spotify flatpak dolphin-emu
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
     pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
