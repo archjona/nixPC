@@ -32,6 +32,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  services.ivpn.enable = true;
   # Kernel-Parameter für Wayland & NVIDIA
   boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
 
@@ -191,7 +192,7 @@
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
     pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
-    wl-clipboard ripgrep fd vesktop shotcut
+    wl-clipboard ripgrep fd vesktop shotcut ivpn ivpn-service ivpn-ui
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
@@ -204,6 +205,6 @@
 
   #mango
   programs.mango.enable = true;
-
+networking.firewall.checkReversePath = "loose";
   system.stateVersion = "24.11";
 }
