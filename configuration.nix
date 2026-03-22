@@ -184,10 +184,10 @@
 
   # System Pakete
   environment.systemPackages = with pkgs; [
-    wget git hyprpaper waybar kitty ghostty swww pywal
+    wget git hyprpaper waybar kitty swww pywal
     gcc cmake clang python3 nerd-fonts.jetbrains-mono
     tmux lazygit hyprshot hyprlock hypridle alsa-utils
-    rofi btop spotify flatpak 
+    rofi btop spotify flatpak lutris
     fzf zathura texlivePackages.latexmk texliveFull
     docker lazydocker distrobox fastfetch adwaita-icon-theme
     pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
