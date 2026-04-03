@@ -149,6 +149,23 @@
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
 
+  # ==============================================
+  # 🚀 OLLAMA KONFIGURATION (OFFIZIELLER WEG)
+  # ==============================================
+  
+  # Ollama als Systemd-Service mit CUDA-Unterstützung für deine RTX 3060 Ti
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;  # Wichtig für NVIDIA GPU!
+    
+    # Optional: Modelle automatisch vorladen (erspart manuelles Pull)
+    loadModels = [
+      "deepseek-coder:6.7b-instruct-q4_K_M"  # Bestes Modell für 8GB VRAM
+    ];
+  };
+  
+  # ==============================================
+
   # Benutzer
   users.users.jona = {
     isNormalUser = true;
@@ -202,9 +219,8 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-
   #mango
   programs.mango.enable = true;
-networking.firewall.checkReversePath = "loose";
+  networking.firewall.checkReversePath = "loose";
   system.stateVersion = "24.11";
 }

@@ -44,7 +44,7 @@ in
   home.homeDirectory = "/home/jona";
   home.stateVersion = "24.11";
 
-  # PAKETE - NUR vesktop-fixed, NICHT das originale vesktop separat
+  # PAKETE
   home.packages = with pkgs; [
     zoxide
     nix-search-tv      # Basis-Paket
@@ -61,7 +61,7 @@ in
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     NIXOS_OZONE_WL = "1";
   };
-
+     
   # GTK & Icons
   gtk = {
     enable = true;
