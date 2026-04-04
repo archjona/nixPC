@@ -1,11 +1,16 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ 
-      /etc/nixos/hardware-configuration.nix 
-      ./nvf-configuration.nix      
-    ];
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    ./nvf-configuration.nix
+  ];
 
   # --- NVIDIA & Grafik Konfiguration ---
   nixpkgs.config.allowUnfree = true;
@@ -16,30 +21,33 @@
   };
 
   # Lade den NVIDIA Treiber
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
-    # Power Management kann bei Hyprland manchmal Flackern verursachen, 
+    # Power Management kann bei Hyprland manchmal Flackern verursachen,
     # daher auf 'false' oder experimentell testen.
-    powerManagement.enable = false; 
+    powerManagement.enable = false;
     powerManagement.finegrained = false;
-    
+
     # Für die 3060 Ti ist 'false' (proprietär) aktuell stabiler für Gaming.
-    open = false; 
-    
+    open = false;
+
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   services.ivpn.enable = true;
   # Kernel-Parameter für Wayland & NVIDIA
-  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
+  boot.kernelParams = [
+    "nvidia_drm.modeset=1"
+    "nvidia_drm.fbdev=1"
+  ];
 
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";           # Erzwingt Wayland für Electron Apps
-    WLR_NO_HARDWARE_CURSORS = "1";  # Behebt unsichtbaren Cursor bei NVIDIA
-    LIBVA_DRIVER_NAME = "nvidia";   # Hardware-Beschleunigung
+    NIXOS_OZONE_WL = "1"; # Erzwingt Wayland für Electron Apps
+    WLR_NO_HARDWARE_CURSORS = "1"; # Behebt unsichtbaren Cursor bei NVIDIA
+    LIBVA_DRIVER_NAME = "nvidia"; # Hardware-Beschleunigung
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
@@ -47,31 +55,36 @@
   # --- Steam & Gaming ---
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; 
+    remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true; # Optional: Für bessere Upscaling-Optionen
   };
-  
+
   programs.gamemode.enable = true; # Optimiert CPU/Prioritäten beim Zocken
-  
+
   # --- Bootloader ---
   boot.loader.grub = {
     enable = true;
     device = "/dev/nvme0n1";
     useOSProber = true;
-    
+
     # Das Gruvbox-Theme mit dem goldenen NixOS-Logo
-    theme = pkgs.fetchFromGitHub {
-      owner = "Atif-Mahmud";
-      repo = "nix-gruv-grub";
-      rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
-      sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
-    } + "/tartarus"; 
+    theme =
+      pkgs.fetchFromGitHub {
+        owner = "Atif-Mahmud";
+        repo = "nix-gruv-grub";
+        rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
+        sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
+      }
+      + "/tartarus";
   };
 
   # --- System-Einstellungen ---
   networking.hostName = "nixos";
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
 
@@ -100,46 +113,46 @@
   services.desktopManager.gnome.enable = true;
 
   # KEINE GNOME-Apps installieren!
-  services.gnome.core-apps.enable = false;  # Keine Basis-Apps
+  services.gnome.core-apps.enable = false; # Keine Basis-Apps
   services.gnome.core-developer-tools.enable = false;
   services.gnome.games.enable = false;
-  
+
   environment.gnome.excludePackages = with pkgs; [
     # Terminals
     xterm
     gnome-terminal
     gnome-console
-    
+
     # GNOME Apps (ALLE direkt, ohne "gnome." Prefix)
-    epiphany        # Web Browser
-    geary           # Email Client
-    gnome-software  # Software Center
+    epiphany # Web Browser
+    geary # Email Client
+    gnome-software # Software Center
     gnome-tour
     gnome-connections
     gnome-contacts
     gnome-characters
     gnome-font-viewer
     simple-scan
-    evince          # Document Viewer
+    evince # Document Viewer
     gnome-calculator
     gnome-calendar
     gnome-clocks
-    cheese          # Camera
-    baobab          # Disks Usage Analyzer
+    cheese # Camera
+    baobab # Disks Usage Analyzer
     gnome-disk-utility
     seahorse
-    eog             # Image Viewer
-    totem           # Videos
+    eog # Image Viewer
+    totem # Videos
   ];
-  
+
   # Printing deaktivieren (wenn nicht benötigt)
   services.printing.enable = false;
-  
+
   # Optional: Kitty als Standard-Terminal setzen
   environment.variables = {
     TERMINAL = "kitty";
-  }; 
-  
+  };
+
   services.xserver.xkb = {
     layout = "de";
     variant = "";
@@ -152,25 +165,31 @@
   # ==============================================
   # 🚀 OLLAMA KONFIGURATION (OFFIZIELLER WEG)
   # ==============================================
-  
+
   # Ollama als Systemd-Service mit CUDA-Unterstützung für deine RTX 3060 Ti
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;  # Wichtig für NVIDIA GPU!
-    
+    package = pkgs.ollama-cuda; # Wichtig für NVIDIA GPU!
+
     # Optional: Modelle automatisch vorladen (erspart manuelles Pull)
     loadModels = [
-      "deepseek-coder:6.7b-instruct-q4_K_M"  # Bestes Modell für 8GB VRAM
+      "deepseek-coder:6.7b-instruct-q4_K_M" # Bestes Modell für 8GB VRAM
     ];
   };
-  
+
   # ==============================================
 
   # Benutzer
   users.users.jona = {
     isNormalUser = true;
     description = "Jona-Elia";
-    extraGroups = [ "networkmanager" "wheel" "docker" "dialout" "tty" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "dialout"
+      "tty"
+    ];
   };
 
   home-manager = {
@@ -180,7 +199,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup";            
+    backupFileExtension = "backup";
   };
 
   programs.nvf = {
@@ -202,15 +221,55 @@
 
   # System Pakete
   environment.systemPackages = with pkgs; [
-    wget git hyprpaper waybar kitty swww pywal
-    gcc cmake clang python3 nerd-fonts.jetbrains-mono
-    tmux lazygit hyprshot hyprlock hypridle alsa-utils
-    rofi btop spotify flatpak dolphin-emu
-    fzf zathura texlivePackages.latexmk texliveFull
-    docker lazydocker distrobox fastfetch adwaita-icon-theme
-    pavucontrol nautilus loupe obs-studio celluloid thunderbird nix-search-tv 
-    wl-clipboard ripgrep fd vesktop shotcut ivpn ivpn-service ivpn-ui
+    wget
+    git
+    hyprpaper
+    waybar
+    kitty
+    swww
+    pywal
+    gcc
+    cmake
+    clang
+    python3
+    nerd-fonts.jetbrains-mono
+    tmux
+    lazygit
+    hyprshot
+    hyprlock
+    hypridle
+    alsa-utils
+    rofi
+    btop
+    spotify
+    flatpak
+    dolphin-emu
+    fzf
+    zathura
+    texlivePackages.latexmk
+    texliveFull
+    docker
+    lazydocker
+    distrobox
+    fastfetch
+    adwaita-icon-theme
+    pavucontrol
+    nautilus
+    loupe
+    obs-studio
+    celluloid
+    thunderbird
+    nix-search-tv
+    wl-clipboard
+    ripgrep
+    fd
+    vesktop
+    shotcut
+    ivpn
+    ivpn-service
+    ivpn-ui
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    firefox
   ];
 
   # Hyprland

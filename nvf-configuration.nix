@@ -9,16 +9,26 @@
     };
 
     statusline.lualine.enable = true;
-    telescope.enable = true;
     autocomplete.nvim-cmp.enable = true;
+    telescope.enable = true;
     lsp.enable = true;
 
-    # Keymaps für nvf
     maps.normal = {
       "gd" = {
         action = "<cmd>lua vim.lsp.buf.definition()<CR>";
         silent = true;
         desc = "Go to definition";
+      };
+
+      "<leader>f" = {
+        action = "<cmd>lua vim.lsp.buf.format({ async = true })<CR>";
+        silent = true;
+        desc = "Format buffer with LSP";
+      };
+      "<leader>gs" = {
+        action = "<cmd>Telescope grep_string<CR>";
+        silent = true;
+        desc = "Grep word under cursor [Telescope]";
       };
     };
 
@@ -33,7 +43,7 @@
     };
 
     # ==============================================
-    # 🚀 EXTRA PLUGINS (laut nvf-Dokumentation)
+    # 🚀 EXTRA PLUGINS (Ollama + DeepSeek)
     # ==============================================
     extraPlugins = {
       vimtex = {
@@ -65,8 +75,13 @@
               chat = { adapter = "ollama" },
               inline = { adapter = "ollama" },
             },
+            display = {
+              chat = {
+                show_settings = false,
+              },
+            },
           })
-          
+
           -- Tastenkürzel für AI-Funktionen
           vim.keymap.set("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { silent = true, desc = "AI Chat öffnen" })
           vim.keymap.set("v", "<leader>ae", "<cmd>'<,'>CodeCompanion /explain<CR>", { silent = true, desc = "Code erklären" })
@@ -77,17 +92,17 @@
     };
 
     # ==============================================
-    # 🎯 TREE-SITTER GRAMMATIK (DIREKT UNTER vim!)
+    # 🎯 TREE-SITTER GRAMMATIK
     # ==============================================
     treesitter = {
       enable = true;
       grammars = with pkgs.tree-sitter-grammars; [
-        tree-sitter-yaml  # YAML für CodeCompanion-Prompts
+        tree-sitter-yaml # YAML für CodeCompanion-Prompts
       ];
     };
 
     # ==============================================
-    # 🌐 LANGUAGES (für LSP, NICHT für Tree-sitter!)
+    # 🌐 LANGUAGES (für LSP)
     # ==============================================
     languages = {
       enableTreesitter = true;
@@ -109,7 +124,7 @@
         vim.g.vimtex_view_automatic = 1
         vim.keymap.set("n", "<leader>ll", "<cmd>VimtexCompile<CR>", { silent = true, desc = "Latex kompilieren" })
       '';
-      
+
       clangd-diagnostics = ''
         vim.api.nvim_create_autocmd("LspAttach", {
           callback = function(args)
@@ -117,6 +132,16 @@
             if client and client.name == "clangd" then
               vim.diagnostic.enable(false, { bufnr = args.buf })
             end
+          end,
+        })
+      '';
+
+      # NEU: Automatische Formatierung beim Speichern für C/C++ und Nix
+      autoformat = ''
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = { "*.c", "*.cpp", "*.h", "*.hpp", "*.nix" },
+          callback = function()
+            vim.lsp.buf.format({ async = false })
           end,
         })
       '';
