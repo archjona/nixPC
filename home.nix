@@ -65,6 +65,8 @@ in
     NIXOS_OZONE_WL = "1";
   };
 
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
   # GTK & Icons
   gtk = {
     enable = true;

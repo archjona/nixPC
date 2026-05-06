@@ -50,6 +50,7 @@
     LIBVA_DRIVER_NAME = "nvidia"; # Hardware-Beschleunigung
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    PATH = [ "$HOME/.local/bin" ];
   };
 
   # --- Steam & Gaming ---
@@ -78,13 +79,19 @@
       }
       + "/tartarus";
   };
-
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   # --- System-Einstellungen ---
   networking.hostName = "nixos";
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "jona"
+    ];
+  };
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
 
@@ -219,6 +226,10 @@
 
   console.keyMap = "de";
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.geist-mono
+  ];
+
   # System Pakete
   environment.systemPackages = with pkgs; [
     wget
@@ -232,7 +243,6 @@
     cmake
     clang
     python3
-    nerd-fonts.jetbrains-mono
     tmux
     lazygit
     hyprshot
@@ -270,6 +280,7 @@
     ivpn-ui
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     firefox
+    zed-editor
   ];
 
   # Hyprland

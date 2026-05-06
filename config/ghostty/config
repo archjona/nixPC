@@ -30,6 +30,7 @@
 theme = Gruvbox Dark
 background-opacity = 0.85
 background-blur = true
+font-family = GeistMono Nerd Font
 font-size = 14
 background-blur = true
 # # Spacing around the equals sign does not matter.
