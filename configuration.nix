@@ -82,6 +82,7 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   # --- System-Einstellungen ---
   networking.hostName = "nixos";
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
   nix.settings = {
     experimental-features = [
       "nix-command"
@@ -118,7 +119,7 @@
 
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
-
+  services.tailscale.enable = true;
   # KEINE GNOME-Apps installieren!
   services.gnome.core-apps.enable = false; # Keine Basis-Apps
   services.gnome.core-developer-tools.enable = false;
@@ -168,23 +169,6 @@
   # Virtualisierung
   virtualisation.docker.enable = true;
   virtualisation.podman.enable = true;
-
-  # ==============================================
-  # 🚀 OLLAMA KONFIGURATION (OFFIZIELLER WEG)
-  # ==============================================
-
-  # Ollama als Systemd-Service mit CUDA-Unterstützung für deine RTX 3060 Ti
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-cuda; # Wichtig für NVIDIA GPU!
-
-    # Optional: Modelle automatisch vorladen (erspart manuelles Pull)
-    loadModels = [
-      "deepseek-coder:6.7b-instruct-q4_K_M" # Bestes Modell für 8GB VRAM
-    ];
-  };
-
-  # ==============================================
 
   # Benutzer
   users.users.jona = {
@@ -279,8 +263,8 @@
     ivpn-service
     ivpn-ui
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    firefox
     zed-editor
+    nextcloud-client
   ];
 
   # Hyprland
