@@ -10,6 +10,7 @@
   imports = [
     /etc/nixos/hardware-configuration.nix
     ./nvf-configuration.nix
+    ./qt-dev.nix
   ];
 
   # --- NVIDIA & Grafik Konfiguration ---
@@ -265,6 +266,18 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     zed-editor
     nextcloud-client
+    foot
+    cmake
+    ninja # schneller als make
+    gcc # oder clang
+    clang-tools # liefert clangd + clang-format
+    qt6.qtbase
+    qt6.qttools # Qt Designer, lupdate, lrelease
+    qt6.qmake
+    qtcreator # nur für den UI-Designer (.ui Files)
+    pkg-config
+    vscode-extensions.vadimcn.vscode-lldb
+    lldb
   ];
 
   # Hyprland
