@@ -253,7 +253,6 @@
     loupe
     obs-studio
     celluloid
-    thunderbird
     nix-search-tv
     wl-clipboard
     ripgrep
@@ -278,6 +277,8 @@
     pkg-config
     vscode-extensions.vadimcn.vscode-lldb
     lldb
+    thunderbird
+    protontricks
   ];
 
   # Hyprland
