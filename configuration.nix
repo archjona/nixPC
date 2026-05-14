@@ -20,7 +20,12 @@
     enable = true;
     enable32Bit = true; # Wichtig für Steam!
   };
-
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      zstd
+    ];
+  };
   # Lade den NVIDIA Treiber
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -39,6 +44,7 @@
   };
 
   services.ivpn.enable = true;
+  services.flatpak.enable = true;
   # Kernel-Parameter für Wayland & NVIDIA
   boot.kernelParams = [
     "nvidia_drm.modeset=1"
@@ -60,6 +66,7 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true; # Optional: Für bessere Upscaling-Optionen
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
 
   programs.gamemode.enable = true; # Optimiert CPU/Prioritäten beim Zocken
@@ -279,6 +286,13 @@
     lldb
     thunderbird
     protontricks
+    freetype
+    appimage-run
+    ydotool
+    grim
+    slurp
+    wl-clipboard
+    satty
   ];
 
   # Hyprland
