@@ -272,7 +272,6 @@
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     zed-editor
     nextcloud-client
-    foot
     cmake
     ninja # schneller als make
     gcc # oder clang
@@ -293,6 +292,7 @@
     slurp
     wl-clipboard
     satty
+    yazi
   ];
 
   # Hyprland

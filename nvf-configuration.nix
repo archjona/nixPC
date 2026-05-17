@@ -45,7 +45,7 @@
     assistant = {
       # Inline Code-Suggestions (Tab zum Akzeptieren)
       copilot = {
-        enable = true;
+        enable = false;
         setupOpts = {
           suggestion = {
             enabled = true;
