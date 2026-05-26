@@ -40,6 +40,31 @@ let
     mimeTypes = [ "x-scheme-handler/discord" ];
     startupWMClass = "Vesktop";
   };
+
+  # CUSTOM PHINGER CURSORS (Gruvbox Material Recolor)
+  # Nicht in nixpkgs -> wird aus dem Release-Tarball des Forks gebaut.
+  phinger-gruvbox = pkgs.stdenvNoCC.mkDerivation {
+    pname = "phinger-cursors-gruvbox-material";
+    version = "3328966123";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/rehanzo/phinger-cursors-gruvbox-material/releases/download/3328966123/phinger-cursors-variants.tar.bz2";
+      hash = "sha256-qAEGY3B0tphEwYGfhkJ555yLgAu1nflCjqCOfZ8vjIE=";
+    };
+
+    sourceRoot = ".";
+    dontConfigure = true;
+    dontBuild = true;
+
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out/share/icons
+      cp -r phinger-cursors* $out/share/icons/
+      runHook postInstall
+    '';
+
+    meta.description = "Phinger cursors, Gruvbox Material recolor";
+  };
 in
 
 {
@@ -78,10 +103,16 @@ in
       name = "Gruvbox-Plus-Dark";
       package = pkgs.gruvbox-plus-icons;
     };
-    cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
-    };
+    # cursorTheme entfällt hier - wird jetzt zentral über home.pointerCursor gesetzt
+  };
+
+  # CURSOR: setzt GTK, XWayland (x11) und die Wayland-Session gemeinsam
+  home.pointerCursor = {
+    name = "phinger-cursors-gruvbox-material"; # oder "-light" für helleren Cursor
+    package = phinger-gruvbox;
+    size = 32; # Phinger-Größen: 24/32/48/64/96/128
+    gtk.enable = true;
+    x11.enable = true;
   };
 
   # Unerwünschte Desktop-Einträge ausblenden
