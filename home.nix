@@ -325,6 +325,11 @@ in
       recursive = true;
       force = true;
     };
+    ".config/quickshell" = {
+      source = ./config/quickshell;
+      recursive = true;
+      force = true;
+    };
   };
 
   programs.home-manager.enable = true;

@@ -293,6 +293,9 @@
     wl-clipboard
     satty
     yazi
+    playerctl
+    quickshell
+    wireplumber
   ];
 
   # Hyprland
