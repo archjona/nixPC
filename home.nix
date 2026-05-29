@@ -325,12 +325,9 @@ in
       recursive = true;
       force = true;
     };
-    ".config/quickshell" = {
-      source = ./config/quickshell;
-      recursive = true;
-      force = true;
-    };
   };
+  xdg.configFile."quickshell/noctalia-shell/settings.json".source = ./config.json;
+  xdg.configFile."quickshell/noctalia-shell/config.json".source = ./config.json;
 
   programs.home-manager.enable = true;
 

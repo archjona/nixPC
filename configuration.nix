@@ -296,6 +296,8 @@
     playerctl
     quickshell
     wireplumber
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+
   ];
 
   # Hyprland
