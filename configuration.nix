@@ -255,7 +255,6 @@
     distrobox
     fastfetch
     adwaita-icon-theme
-    pavucontrol
     nautilus
     loupe
     obs-studio
@@ -287,7 +286,6 @@
     protontricks
     freetype
     appimage-run
-    ydotool
     grim
     slurp
     wl-clipboard
@@ -295,14 +293,12 @@
     yazi
     playerctl
     quickshell
-    wireplumber
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-
   ];
 
   # Hyprland
-  programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  #  programs.hyprland.enable = true;
+  # programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
