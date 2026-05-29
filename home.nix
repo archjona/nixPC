@@ -326,9 +326,10 @@ in
       force = true;
     };
   };
-  xdg.configFile."quickshell/noctalia-shell/settings.json".source = ./config.json;
-  xdg.configFile."quickshell/noctalia-shell/config.json".source = ./config.json;
-
+  xdg.configFile."quickshell/noctalia-shell/config.json".source =
+    ./config/noctalia-shell/settings.json;
+  xdg.configFile."quickshell/noctalia-shell/settings.json".source =
+    ./config/noctalia-shell/settings.json;
   programs.home-manager.enable = true;
 
 }
