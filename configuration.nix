@@ -387,6 +387,7 @@
     quickshell
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     libreoffice
+    wlr-randr
   ];
 
   xdg.portal.enable = true;
