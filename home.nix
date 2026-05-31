@@ -743,7 +743,7 @@ in
       };
 
       dock = {
-        enabled = true;
+        enabled = false;
         position = "bottom";
         displayMode = "auto_hide";
         dockType = "floating";

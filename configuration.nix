@@ -126,6 +126,8 @@
     enable = true;
     libraries = with pkgs; [
       zstd
+      stdenv.cc.cc.lib
+      zlib
     ];
   };
 
