@@ -1,0 +1,25 @@
+
+
+# Commands that should be applied only for interactive shells.
+[[ $- == *i* ]] || return
+
+HISTFILESIZE=100000
+HISTSIZE=10000
+
+shopt -s histappend
+shopt -s extglob
+shopt -s globstar
+shopt -s checkjobs
+
+
+
+if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
+  . "/nix/store/wcy3wahf6bpivn0clm94inv26mvqbkb8-bash-completion-2.17.0/etc/profile.d/bash_completion.sh"
+fi
+
+# Wichtig: --cmd cd direkt beim init übergeben
+eval "$(zoxide init bash --cmd cd)"
+
+# Alias für einfacheren Zugriff
+alias discord='vesktop-fixed'
+
