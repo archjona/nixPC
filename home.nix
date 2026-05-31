@@ -417,7 +417,7 @@ in
               colorizeIcons = false;
               emptyColor = "secondary";
               enableScrollWheel = true;
-              focusedColor = "primary";
+              focusedColor = "tertiary";
               followFocusedScreen = false;
               fontWeight = "bold";
               groupedBorderOpacity = 1;
@@ -425,7 +425,7 @@ in
               iconScale = 0.8;
               id = "Workspace";
               labelMode = "index";
-              occupiedColor = "secondary";
+              occupiedColor = "primary";
               pillSize = 0.6;
               showApplications = false;
               showApplicationsHover = false;
