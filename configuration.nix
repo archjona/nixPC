@@ -388,6 +388,7 @@
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     libreoffice
     wlr-randr
+    teamspeak6-client
   ];
 
   xdg.portal.enable = true;
