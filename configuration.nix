@@ -389,6 +389,7 @@
     libreoffice
     wlr-randr
     teamspeak6-client
+    joplin-desktop
   ];
 
   xdg.portal.enable = true;
