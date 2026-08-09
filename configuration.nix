@@ -13,54 +13,7 @@
     ./qt-dev.nix
   ];
 
-  # ===========================================================================
-  # >>> GRAFIKKARTE: NVIDIA RTX 3060 Ti <<<
-  # Dieser gesamte Block ist NVIDIA-spezifisch und muss bei einem
-  # GPU-Wechsel ersetzt werden. Siehe AMD-Block weiter unten.
-  # ===========================================================================
-
-  # Proprietäre NVIDIA-Treiber erfordern unfree packages.
-  # Bei AMD nicht nötig (amdgpu ist vollständig open-source).
   nixpkgs.config.allowUnfree = true;
-
-  # Lädt den proprietären NVIDIA-Kernel-Treiber.
-  # AMD-Alternative: [ "amdgpu" ] — kein weiterer hardware.nvidia-Block nötig.
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    # Power Management kann bei Hyprland/Wayland Flackern verursachen.
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    # 'false' = proprietärer Treiber. Für die 3060 Ti stabiler als open= true.
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  # Kernel-Parameter für NVIDIA DRM/KMS unter Wayland.
-  # AMD benötigt das nicht — amdgpu aktiviert KMS automatisch.
-  boot.kernelParams = [
-    "nvidia_drm.modeset=1"
-    "nvidia_drm.fbdev=1"
-  ];
-
-  # NVIDIA-spezifische Wayland/Vulkan-Umgebungsvariablen.
-  # Bei AMD müssen diese Zeilen entfernt oder durch AMD-Varianten ersetzt werden
-  # (siehe AMD-Block weiter unten).
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # Erzwingt Wayland für Electron Apps (GPU-unabhängig, behalten)
-    WLR_NO_HARDWARE_CURSORS = "1"; # NVIDIA: Behebt unsichtbaren Cursor — bei AMD entfernen
-    LIBVA_DRIVER_NAME = "nvidia"; # NVIDIA VA-API — bei AMD: "radeonsi" oder weglassen
-    GBM_BACKEND = "nvidia-drm"; # NVIDIA GBM — bei AMD entfernen
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia"; # NVIDIA GLX — bei AMD entfernen
-    PATH = [ "$HOME/.local/bin" ]; # GPU-unabhängig, behalten
-  };
-
-  # ===========================================================================
-  # >>> ENDE: NVIDIA-BLOCK <<<
-  # ===========================================================================
-
   # ///////////////////////////////////////////////////////////////////////////
   # >>> [AUSKOMMENTIERT] AMD RX 9070 XT — Als Ersatz für den NVIDIA-Block <<<
   # ///////////////////////////////////////////////////////////////////////////
@@ -72,20 +25,15 @@
   # nixpkgs.config.allowUnfree = true; # Nur nötig für andere unfree-Pakete (Steam etc.)
   #
   # # amdgpu ist im Kernel integriert — kein proprietärer Treiber nötig.
-  # services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   #
   # # RX 9070 XT (RDNA 4) — benötigt Linux 6.14+ und Mesa 25.0+ für vollen Support.
   # # NixOS 25.05 / unstable bringen beides mit.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   #
-  # hardware.amdgpu = {
-  #   initrd.enable = true;     # früher KMS-Start, verhindert Flackern beim Booten
-  #   opencl.enable = true;     # ROCm/OpenCL für GPU-Compute (optional)
-  #   amdvlk = {
-  #     enable = true;          # AMDs eigener Vulkan-Treiber (Alternative zu RADV/Mesa)
-  #     support32Bit.enable = true; # 32-Bit Vulkan für Steam/Proton
-  #   };
-  # };
+  #   hardware.amdgpu = {
+  #     initrd.enable = true;     # früher KMS-Start, verhindert Flackern beim Booten
+  #     };
   #
   # # Für maximale Gaming-Performance: RADV (Mesa) bevorzugen, nicht amdvlk.
   # # RADV ist für die meisten Spiele schneller und besser gepflegt.
@@ -94,21 +42,20 @@
   # #   AMD_VULKAN_ICD=AMDVLK → AMDs Treiber
   #
   # # Kernel-Parameter für RDNA 4 Performance & Features.
-  # boot.kernelParams = [
-  #   "amdgpu.ppfeaturemask=0xffffffff" # Entsperrt alle PowerPlay-Features (OC/Lüfterkurven)
-  #   "amdgpu.dcdebugmask=0x10"         # Verbessert Wayland/Display-Stabilität
-  # ];
+  #   boot.kernelParams = [
+  #     "amdgpu.ppfeaturemask=0xffffffff" # Entsperrt alle PowerPlay-Features (OC/Lüfterkurven)
+  #     "amdgpu.dcdebugmask=0x10"         # Verbessert Wayland/Display-Stabilität
+  #   ];
   #
   # # AMD-Umgebungsvariablen für Wayland & Vulkan.
-  # environment.sessionVariables = {
-  #   NIXOS_OZONE_WL       = "1";       # Wayland für Electron Apps
-  #   # WLR_NO_HARDWARE_CURSORS NICHT setzen — bei AMD nicht nötig
-  #   LIBVA_DRIVER_NAME    = "radeonsi"; # VA-API Hardware-Dekodierung via Mesa
-  #   VDPAU_DRIVER         = "radeonsi"; # VDPAU (Fallback-Dekodierung)
-  #   # GBM_BACKEND und __GLX_VENDOR_LIBRARY_NAME NICHT setzen — amdgpu braucht das nicht
-  #   AMD_VULKAN_ICD       = "RADV";    # RADV als Standard-Vulkan-Treiber erzwingen
-  #   PATH = [ "$HOME/.local/bin" ];
-  # };
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1"; # Wayland für Electron Apps
+    # WLR_NO_HARDWARE_CURSORS NICHT setzen — bei AMD nicht nötig
+    #   LIBVA_DRIVER_NAME    = "radeonsi"; # VA-API Hardware-Dekodierung via Mesa
+    #   VDPAU_DRIVER         = "radeonsi"; # VDPAU (Fallback-Dekodierung)
+    #   # GBM_BACKEND und __GLX_VENDOR_LIBRARY_NAME NICHT setzen — amdgpu braucht das nicht
+    PATH = [ "$HOME/.local/bin" ];
+  };
   # ///////////////////////////////////////////////////////////////////////////
   # >>> ENDE: AMD-Block <<<
   # ///////////////////////////////////////////////////////////////////////////
@@ -148,20 +95,21 @@
   # ===========================================================================
   # Bootloader
   # ===========================================================================
-
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/nvme0n1";
-    useOSProber = true;
-    theme =
-      pkgs.fetchFromGitHub {
-        owner = "Atif-Mahmud";
-        repo = "nix-gruv-grub";
-        rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
-        sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
-      }
-      + "/tartarus";
-  };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub = {
+  #   enable = true;
+  #   device = "/dev/nvme0n1";
+  #   useOSProber = true;
+  #   theme =
+  #     pkgs.fetchFromGitHub {
+  #       owner = "Atif-Mahmud";
+  #       repo = "nix-gruv-grub";
+  #       rev = "269507de98ecd4fd9c57aa06bf5d8132d6949a06";
+  #       sha256 = "sha256-UEPZxyT09Z0PiOka/Dh4m8VvqF4l+01eZVbRkPJduDk=";
+  #     }
+  #     + "/tartarus";
+  # };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
