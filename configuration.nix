@@ -338,6 +338,7 @@
     wlr-randr
     teamspeak6-client
     joplin-desktop
+    r2modman
   ];
 
   xdg.portal.enable = true;
