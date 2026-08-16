@@ -55,6 +55,7 @@
     #   VDPAU_DRIVER         = "radeonsi"; # VDPAU (Fallback-Dekodierung)
     #   # GBM_BACKEND und __GLX_VENDOR_LIBRARY_NAME NICHT setzen — amdgpu braucht das nicht
     PATH = [ "$HOME/.local/bin" ];
+    STEAM_FORCE_DESKTOPUI_SCALING = "1.3";
   };
   # ///////////////////////////////////////////////////////////////////////////
   # >>> ENDE: AMD-Block <<<
@@ -87,7 +88,9 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
-    extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extraCompatPackages = [
+      pkgs.proton-ge-bin
+    ];
   };
 
   programs.gamemode.enable = true;
@@ -339,6 +342,7 @@
     teamspeak6-client
     joplin-desktop
     r2modman
+    xwayland-satellite
   ];
 
   xdg.portal.enable = true;

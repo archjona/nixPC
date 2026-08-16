@@ -97,6 +97,7 @@ in
     ELECTRON_USE_WAYLAND = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     NIXOS_OZONE_WL = "1";
+    STEAM_FORCE_DESKTOPUI_SCALING = "1.3";
   };
 
   home.sessionPath = [ "$HOME/.local/bin" ];
