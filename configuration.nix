@@ -50,6 +50,7 @@
   # # AMD-Umgebungsvariablen für Wayland & Vulkan.
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # Wayland für Electron Apps
+    WLR_XWAYLAND_FORCE_1X = "1";
     # WLR_NO_HARDWARE_CURSORS NICHT setzen — bei AMD nicht nötig
     #   LIBVA_DRIVER_NAME    = "radeonsi"; # VA-API Hardware-Dekodierung via Mesa
     #   VDPAU_DRIVER         = "radeonsi"; # VDPAU (Fallback-Dekodierung)
