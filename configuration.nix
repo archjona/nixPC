@@ -344,6 +344,8 @@
     joplin-desktop
     r2modman
     xwayland-satellite
+    qbittorrent
+    flatpak
   ];
 
   xdg.portal.enable = true;
